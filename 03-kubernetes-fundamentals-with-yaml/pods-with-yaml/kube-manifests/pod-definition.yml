@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+  labels:
+    app: myapp
+
+spec:
+  containers: # container is a list item since we can have multiple containers in a pod
+    - name: myapp-container
+      image: stacksimplify/kubenginx:1.0.0
+      ports:
+        - containerPort: 80   # Service uses this as targetPort

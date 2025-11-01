@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:         #Dictionary containing metadata of the ReplicaSet
+  name: myapp2-rs
+  labels:
+    app: myapp2
+
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp2   # matchLabels should match the labels defined in the pod template so that ReplicaSet can manage those pods
+
+  template:   # Template contains the pod definition that ReplicaSet will create
+    metadata:
+      name: myapp2-pod
+      labels:
+        app: myapp2
+    spec:
+      containers: # container is a list item since we can have multiple containers in a pod
+        - name: myapp2-container
+          image: stacksimplify/kubenginx:2.0.0
+          ports:
+            - containerPort: 80   # Service uses this as targetPort
