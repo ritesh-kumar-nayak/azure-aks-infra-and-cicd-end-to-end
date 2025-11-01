@@ -1,0 +1,26 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: restapp-frontend-deployment
+  labels:
+    tier: frontend
+    name: app-frontend
+
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      tier: frontend
+      name: app-frontend
+  template:
+    metadata:
+      labels:
+        tier: frontend
+        name: app-frontend
+    spec:
+      containers:
+        - name: restapp-frontend-container
+          image: stacksimplify/kube-frontend-nginx:1.0.0
+          ports:
+            - containerPort: 80  # LoadBalancer Service uses this as targetPort

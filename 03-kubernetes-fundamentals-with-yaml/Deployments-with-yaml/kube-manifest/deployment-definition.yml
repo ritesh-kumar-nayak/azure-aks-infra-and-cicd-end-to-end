@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:         #Dictionary containing metadata of the Deployment
+  name: myapp3-deployment
+  labels:                 # Labels here identify the Deployment object itself, not the Pods. (Optional)
+    app: myapp3
+
+spec:
+  replicas: 3
+  selector:
+    matchLabels:    # Tells the ReplicaSet (created by the Deployment) which Pods it should manage.   (Mandatory: ✅)
+      app: myapp3   # The values under matchLabels must exactly match the labels under the Pod template’s metadata.labels.
+
+  template:   # Template contains the pod definition that ReplicaSet will create
+    metadata:
+      name: myapp3-pod
+      labels:
+        app: myapp3
+    spec:
+      containers: # container is a list item since we can have multiple containers in a pod
+        - name: myapp3-container
+          image: stacksimplify/kubenginx:3.0.0
+          ports:
+            - containerPort: 80   # Service uses this as targetPort

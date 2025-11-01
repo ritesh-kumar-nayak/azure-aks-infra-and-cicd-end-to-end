@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: restapp-backend-deployment
+  labels:             # Labels here identify the Deployment object itself, not the Pods. (Optional)
+    tier: backend
+    name: app-backend
+
+#Label Match Logic: Deployment.spec.selector.matchLabels  <--->  Pod template.metadata.labels
+
+spec:
+  replicas: 3
+  selector:
+    matchLabels:      # Tells the ReplicaSet (created by the Deployment) which Pods it should manage. (Mandatory: ✅)
+      tier: backend   # The values under matchLabels must exactly match the labels under the Pod template’s metadata.labels.
+      name: app-backend
+  template:
+    metadata:
+      labels:       # These labels are applied to Pods created by the ReplicaSet. (Mandatory: ✅)
+        tier: backend     # If they don’t match → the Deployment will fail validation (Kubernetes will throw an error: selector does not match template labels).
+        name: app-backend
+    spec:
+      containers:
+        - image: stacksimplify/kube-helloworld:1.0.0
+          name: restapp-backend-container
+          ports:
+            - containerPort: 8080   # Service uses this as targetPort
