@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: usermanagement-dbcreation-script
+data:
+  mysql_usermgmt_db_init_script.sql: |
+    DROP DATABASE IF EXISTS webappdb;
+    CREATE DATABASE webappdb;
