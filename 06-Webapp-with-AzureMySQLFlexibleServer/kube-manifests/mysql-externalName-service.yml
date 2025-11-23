@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  type: ExternalName
+  externalName: akswebappdb2011cdd.mysql.database.azure.com
+
+# This external name service gives the mysql dns a local name as mysql-ext-svc which will be used across the cluster

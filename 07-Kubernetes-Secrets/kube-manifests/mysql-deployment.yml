@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:       # strategy for deployment, can be RollingUpdate or Recreate. Since it is a database, we use Recreate to avoid conflicts.
+    type: Recreate
+  template:     # pod template
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql-container
+          image: mysql:5.6
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-db-password
+                  key: db-password
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts:       # Mounting volumes to the container
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+              subPath: mysql-data
+            - name: usermanagement-dbcreation-script
+              mountPath: /docker-entrypoint-initdb.d  # Mounting the ConfigMap to initialize the database. MySQL will execute any .sql files in this directory on startup.
+
+      volumes:
+        - name: mysql-persistent-storage      # Mounting the PersistentVolumeClaim as a volume
+          persistentVolumeClaim:
+            claimName: azure-managed-disks-pvc
+        
+        - name: usermanagement-dbcreation-script        # Mounting the ConfigMap as a volume
+          configMap:
+            name: usermanagement-dbcreation-script

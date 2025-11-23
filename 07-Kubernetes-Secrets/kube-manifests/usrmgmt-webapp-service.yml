@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: usermgmt-lb-service
+  labels:
+    app: usermgmt-webapp
+
+spec:
+  type: LoadBalancer
+  selector:     # to which pod it needs to send the trafic
+    app: usermgmt-webapp
+  ports:
+    - port: 80
+      targetPort: 8080

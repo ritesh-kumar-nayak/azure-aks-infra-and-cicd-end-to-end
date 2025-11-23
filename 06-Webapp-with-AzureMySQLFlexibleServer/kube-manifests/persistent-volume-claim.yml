@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: azure-managed-disks-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: managed-premium-retain-sc
+  resources:
+    requests:
+      storage: 5Gi # Requesting 5 GiB of storage
+# This PersistentVolumeClaim requests a 5 GiB volume using the 'managed-premium-retain-sc' StorageClass.
