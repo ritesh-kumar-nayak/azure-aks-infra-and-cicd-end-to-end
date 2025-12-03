@@ -1,0 +1,18 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: custom-azure-files-sc
+provisioner: file.csi.azure.com
+parameters:
+  skuName: Standard_LRS
+mountOptions:
+  - dir_mode=0777
+  - file_mode=0777
+  - uid=0
+  - gid=0
+  - mfsymlinks
+  - nosharesock
+  - cache=strict
+  - vers=3.0
+reclaimPolicy: Delete
+volumeBindingMode: Immediate

@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment-azfiles
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: azfiles-nginx
+
+  template:   # pod template
+    metadata:
+      labels:
+        app: azfiles-nginx
+    spec:
+      containers:
+        - name: azfiles-nginx-app-container
+          image: stacksimplify/kube-nginxapp1:1.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: azfiles-volume
+              mountPath: "/usr/share/nginx/html/app1"
+              
+      volumes:
+        - name: azfiles-volume
+          persistentVolumeClaim:
+            claimName: azfiles-pvc
