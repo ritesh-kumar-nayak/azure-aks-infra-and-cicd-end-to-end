@@ -1,0 +1,7 @@
+{
+  "tenantId": "30fe8ff1-adc6-444d-ba94-1238894df42c",
+  "subscriptionId": "2b28c85-1948-4263-90ca-bade2bac4df4",
+  "resourceGroup": "kml_rg_main-af6b5700e1db4c1c", 
+  "useManagedIdentityExtension": true,
+  "userAssignedIdentityID": "copy-the-client-id-from-the-managed-identity-created-by-you-for-dns"  
+}
