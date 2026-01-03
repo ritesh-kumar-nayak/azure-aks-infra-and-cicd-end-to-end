@@ -1,0 +1,41 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev3
+
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: default-cpu-memory-limit-range
+  namespace: dev3
+spec:
+  limits:
+  # 'default' and 'defaultRequest' may not be specified when type is 'Pod'
+  - type: Container
+    default:
+      cpu: "500m"
+      memory: "512Mi"
+    defaultRequest:
+      cpu: "200m"
+      memory: "256Mi"
+    
+# ---
+# # LimitRange for PersistentVolumeClaim
+# apiVersion: v1
+# kind: LimitRange
+# metadata:
+#   name: LimitRangeName
+#   namespace: default
+# spec:
+#   limits:
+#   - type: PersistentVolumeClaim
+#     default:
+#       storage: 2Gi
+#     defaultRequest:
+#       storage: 2Gi
+#     max:
+#       storage: 2Gi
+#     min:
+#       storage: 2Gi
