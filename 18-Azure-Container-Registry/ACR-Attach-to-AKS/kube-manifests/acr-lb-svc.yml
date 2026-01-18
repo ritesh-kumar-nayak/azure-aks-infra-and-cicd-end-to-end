@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: acrdemo-localdocker-svc
+  labels:
+    app: acrdemo-loacaldocker
+spec:
+  type: LoadBalancer
+  selector:
+    app: acrdemo-loacaldocker
+  ports:
+    - port: 80
+      targetPort: 80

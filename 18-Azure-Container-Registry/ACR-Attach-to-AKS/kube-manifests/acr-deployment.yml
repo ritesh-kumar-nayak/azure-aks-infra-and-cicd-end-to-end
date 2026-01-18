@@ -1,0 +1,23 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: acrdemo-loacaldocker-deployment
+  labels:
+    app: acrdemo-loacaldocker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: acrdemo-loacaldocker
+  template:
+    metadata:
+      labels:
+        app: acrdemo-loacaldocker
+    spec:
+      containers:
+        - name: acrdemo-loacaldocker-container
+          image: aksdemoregistry1.azurecr.io/app1/kube-nginx-acr1:v1     # the image will be from ACR repository
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
