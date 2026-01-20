@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: acrdemo-sp-svc
+  labels:
+    app: acrdemo-sp
+spec:
+  type: LoadBalancer
+  selector:
+    app: acrdemo-sp
+  ports:
+    - port: 80
+      targetPort: 80
