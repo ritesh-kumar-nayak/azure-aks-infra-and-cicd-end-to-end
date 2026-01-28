@@ -13,7 +13,7 @@ variables:
   dockerRegistryServiceConnection: 'f72c7c09-6fc0-45be-a5bf-272281fd6127'
   imageRepository: 'app1nginx'
   containerRegistry: 'acrforazdevpsintegration.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/19-Azure-DevOps-with-AKS/Azure-DevOps-Build-and-Push-to-ACR/dockerfile'
+  dockerfilePath: '$(Build.SourcesDirectory)/19-Azure-DevOps-with-AKS/Azure-DevOps-Build-and-Push-to-ACR/Dockerfile'
   tag: '$(Build.BuildId)'
 
   # Agent VM image name
