@@ -18,6 +18,8 @@ variables:
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
+  pool:
+    default: RITESH
 
 stages:
 - stage: Build
