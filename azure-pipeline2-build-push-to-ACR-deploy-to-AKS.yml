@@ -70,8 +70,10 @@ stages:
             inputs:
               action: deploy
               manifests: |
-                $(Pipeline.Workspace)/manifests/deployment.yml
-                $(Pipeline.Workspace)/manifests/service.yml
+                $(Build.SourcesDirectory)/19-Azure-DevOps-with-AKS/Azure-DevOps-Deploy-to-AKS/manifests/deployment.yml
+                $(Build.SourcesDirectory)/19-Azure-DevOps-with-AKS/Azure-DevOps-Deploy-to-AKS/manifests/service.yml
+             #   $(Pipeline.Workspace)/manifests/deployment.yml
+             #   $(Pipeline.Workspace)/manifests/service.yml
               imagePullSecrets: |
                 $(imagePullSecret)
               containers: |
