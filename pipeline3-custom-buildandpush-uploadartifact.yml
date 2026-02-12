@@ -60,7 +60,18 @@ stages:
         Contents: '**'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
         OverWrite: true
-    - bash: echo After Copying Contents in Build Artifact Directory; ls -R $(Build.ArtifactStagingDirectory)
+
+    - task: PowerShell@2
+      displayName: "List Artifact Staging Directory After Copy"
+      inputs:
+        targetType: 'inline'
+        script: |
+          Write-Host "Before copying contents into Build Artifact Directory:"
+          Write-Host "Artifact Staging Path: $(Build.ArtifactStagingDirectory)"
+          Write-Host "--------------------------------------------"
+          Get-ChildItem -Path "$(System.DefaultWorkingDirectory)"
+          Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)"    
+
     #Publish Artifacts to Azure Pipeline
     - task: PublishBuildArtifacts@1
       inputs:
