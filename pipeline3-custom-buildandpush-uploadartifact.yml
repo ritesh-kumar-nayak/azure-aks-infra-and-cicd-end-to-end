@@ -38,9 +38,13 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
-    
-    - bash: echo Contents in System Default Working Directory; ls -R $(System.DefaultWorkingDirectory)
-    - bash: echo Before Copying Contents in Build Artifact Directory; ls -R $(Build.ArtifactStagingDirectory)
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: 'echo After Copying Contents in Build Artifact Directory; ls $(Build.ArtifactStagingDirectory)'
+    # - bash: echo Contents in System Default Working Directory; ls -R $(System.DefaultWorkingDirectory)
+    # - bash: echo Before Copying Contents in Build Artifact Directory; ls -R $(Build.ArtifactStagingDirectory)
+
     - task: CopyFiles@2
       inputs:
         SourceFolder: '$(System.DefaultWorkingDirectory)/manifests'
