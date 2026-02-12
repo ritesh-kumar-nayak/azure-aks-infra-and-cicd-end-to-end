@@ -38,10 +38,17 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+
     - task: PowerShell@2
+      displayName: "List Artifact Staging Directory Before Copy"
       inputs:
         targetType: 'inline'
-        script: 'echo After Copying Contents in Build Artifact Directory; ls $(Build.ArtifactStagingDirectory)'
+        script: |
+          Write-Host "Before copying contents into Build Artifact Directory:"
+          Write-Host "Artifact Staging Path: $(Build.ArtifactStagingDirectory)"
+          Write-Host "--------------------------------------------"
+          Get-ChildItem -Path "$(System.DefaultWorkingDirectory)" -Recurse
+          Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)" -Recurse
     # - bash: echo Contents in System Default Working Directory; ls -R $(System.DefaultWorkingDirectory)
     # - bash: echo Before Copying Contents in Build Artifact Directory; ls -R $(Build.ArtifactStagingDirectory)
 
