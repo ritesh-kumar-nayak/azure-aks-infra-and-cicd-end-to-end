@@ -48,6 +48,8 @@ stages:
           Write-Host "Artifact Staging Path: $(Build.ArtifactStagingDirectory)"
           Write-Host "--------------------------------------------"
           Get-ChildItem -Path "$(System.DefaultWorkingDirectory)"
+          echo "Artifact Staging Below:---"
+          Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)"
           
     # - bash: echo Contents in System Default Working Directory; ls -R $(System.DefaultWorkingDirectory)
     # - bash: echo Before Copying Contents in Build Artifact Directory; ls -R $(Build.ArtifactStagingDirectory)
