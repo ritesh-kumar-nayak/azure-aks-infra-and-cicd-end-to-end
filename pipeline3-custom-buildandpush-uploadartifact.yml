@@ -37,3 +37,7 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+    
+    - bash: echo Contents in System Default Working Directory; ls -R $(System.DefaultWorkingDirectory)
+    - bash: echo Before Copying Contents in Build Artifact Directory; ls -R $(Build.ArtifactStagingDirectory)
+    
