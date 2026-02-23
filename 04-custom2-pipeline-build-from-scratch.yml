@@ -1,0 +1,34 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+#Stage-1:
+  #Task1: Build Docker Image and push to Azure Container Registry ACR
+  #Task2: Copy Kube-Manifests Files to build artiact Directory
+  #Task3: Publish build artifacts to Azure Pipelines
+#Pipeline Hierarcihal Flow: Stages-->Stage-->Jobs-->Job-->Steps-->Task1, Task2, Task3
+
+trigger: none
+#- main
+variables:
+  tag: '$(Build.BuildId)'
+
+stages:
+  #Build Stage
+  - stage: Build
+    displayName: Build & Push Docker Image
+    jobs:
+      - job: BuildJob
+        displayName: Build & Push Job
+        pool: Default
+        steps:
+          - task: Docker@2
+            inputs:
+              containerRegistry: 'manual-aksdevopsacr-service_connection'
+              repository: 'custom2aksnginxapp1'
+              command: 'buildAndPush'
+              Dockerfile: '**/Dockerfile'
+              tags: |
+                $(tag)
+                $(Build.SourceVersion)    #it tags the docker image with commit id from git
