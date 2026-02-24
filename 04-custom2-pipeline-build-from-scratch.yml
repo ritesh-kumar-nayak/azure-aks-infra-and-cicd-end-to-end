@@ -9,7 +9,7 @@
   #Task3: Publish build artifacts to Azure Pipelines
 #Pipeline Hierarcihal Flow: Stages-->Stage-->Jobs-->Job-->Steps-->Task1, Task2, Task3
 
-trigger: none
+trigger:
   - main
 variables:
   tag: '$(Build.BuildId)'
