@@ -32,7 +32,7 @@ stages:
               Dockerfile: $(dockerfilePath)
               tags: |
                 $(tag)
-                $(Build.SourceVersion)    #it tags the docker image with commit id from git
+                $(Build.SourceVersion)    
 
           - task: PowerShell@2
             displayName: "List Artifact Staging Directory Before Copy"
