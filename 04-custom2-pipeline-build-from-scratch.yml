@@ -10,7 +10,7 @@
 #Pipeline Hierarcihal Flow: Stages-->Stage-->Jobs-->Job-->Steps-->Task1, Task2, Task3
 
 trigger: none
-#- main
+  - main
 variables:
   tag: '$(Build.BuildId)'
   dockerfilePath: '$(Build.SourcesDirectory)/19-Azure-DevOps-with-AKS/Azure-DevOps-BuildPipeline-Publish-Artifact/Dockerfile'
@@ -33,3 +33,43 @@ stages:
               tags: |
                 $(tag)
                 $(Build.SourceVersion)    #it tags the docker image with commit id from git
+
+          - task: PowerShell@2
+            displayName: "List Artifact Staging Directory Before Copy"
+            inputs:
+              targetType: 'inline'
+              script: |
+                Write-Host "Before copying contents into Build Artifact Directory:"
+                Write-Host "Artifact Staging Path: $(Build.ArtifactStagingDirectory)"
+                Write-Host "--------------------------------------------"
+                Get-ChildItem -Path "$(System.DefaultWorkingDirectory)"
+                echo "Artifact Staging Below:---"
+                Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)"
+                
+          # - bash: echo Contents in System Default Working Directory; ls -R $(System.DefaultWorkingDirectory)
+          # - bash: echo Before Copying Contents in Build Artifact Directory; ls -R $(Build.ArtifactStagingDirectory)
+
+          - task: CopyFiles@2
+            inputs:
+              SourceFolder: '$(System.DefaultWorkingDirectory)/manifests'
+              Contents: '**'
+              TargetFolder: '$(Build.ArtifactStagingDirectory)'
+              OverWrite: true
+
+          - task: PowerShell@2
+            displayName: "List Artifact Staging Directory After Copy"
+            inputs:
+              targetType: 'inline'
+              script: |
+                Write-Host "Before copying contents into Build Artifact Directory:"
+                Write-Host "Artifact Staging Path: $(Build.ArtifactStagingDirectory)"
+                Write-Host "--------------------------------------------"
+                Get-ChildItem -Path "$(System.DefaultWorkingDirectory)"
+                Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)"    
+
+          #Publish Artifacts to Azure Pipeline
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: 'kube-manifests'
+              publishLocation: 'Container'
