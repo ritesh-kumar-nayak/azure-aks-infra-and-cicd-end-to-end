@@ -13,6 +13,7 @@ trigger: none
 #- main
 variables:
   tag: '$(Build.BuildId)'
+  dockerfilePath: '$(Build.SourcesDirectory)/19-Azure-DevOps-with-AKS/Azure-DevOps-BuildPipeline-Publish-Artifact/Dockerfile'
 
 stages:
   #Build Stage
@@ -28,7 +29,7 @@ stages:
               containerRegistry: 'manual-aksdevopsacr-service_connection'
               repository: 'custom2aksnginxapp1'
               command: 'buildAndPush'
-              Dockerfile: '**/Dockerfile'
+              Dockerfile: $(dockerfilePath)
               tags: |
                 $(tag)
                 $(Build.SourceVersion)    #it tags the docker image with commit id from git
